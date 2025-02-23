@@ -39,3 +39,46 @@ class Solution {
         
     }
 }
+
+
+// Time Complexity :O(max(k,n)) ->k is the product of all digits and n is the length of the string
+// Space Complexity :O(max(k,n))
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:recursion approach without stack usage.
+
+
+class Solution {
+    int i;
+    public String decodeString(String s) {
+        int currentNum=0;
+        StringBuilder currentString = new StringBuilder();
+         while(i<s.length()){
+            char ch=s.charAt(i) ;
+            if(Character.isDigit(ch)){
+                currentNum=currentNum*10+ch - '0';
+                i++;
+            }else if(ch == '['){
+                i++;
+             String decoded= decodeString(s);
+             StringBuilder baby=new StringBuilder();
+              for(int k=0;k<currentNum;k++){
+              baby.append(decoded);
+              }
+             currentString.append(baby);
+             System.out.println("parent"+currentString);
+                currentNum=0;
+                i++;
+            }else if(ch == ']'){
+              return currentString.toString();
+            }else{
+                currentString=currentString.append(ch);
+                i++;
+            }
+        }
+        return currentString.toString();
+        
+    }
+}
